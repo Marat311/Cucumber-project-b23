@@ -1,0 +1,141 @@
+package com.cydeo.pages;
+
+
+import com.cydeo.utility.Driver;
+import io.cucumber.java.eo.Se;
+import io.cucumber.java.it.Ma;
+import org.openqa.selenium.By;
+import org.openqa.selenium.WebElement;
+import org.openqa.selenium.support.FindBy;
+import org.openqa.selenium.support.PageFactory;
+import org.openqa.selenium.support.ui.Select;
+
+import java.util.ArrayList;
+import java.util.LinkedHashMap;
+import java.util.List;
+import java.util.Map;
+
+public class WOrderPage {
+
+    @FindBy(xpath = "//h2[normalize-space(.)='Order']")
+    public WebElement header ;
+
+    @FindBy(id="ctl00_MainContent_fmwOrder_ddlProduct")
+    public WebElement productDropdown ;
+
+    @FindBy(id="ctl00_MainContent_fmwOrder_txtQuantity")
+    public WebElement quantityBox ;
+
+    @FindBy(id="ctl00_MainContent_fmwOrder_txtUnitPrice")
+    public WebElement priceBox ;
+
+    @FindBy(xpath = "(//input[@type='text'])[2]")
+    public WebElement priceBoxValue;
+
+    @FindBy(id="ctl00_MainContent_fmwOrder_txtDiscount")
+    public WebElement discountBox ;
+
+    @FindBy(id="ctl00_MainContent_fmwOrder_txtTotal")
+    public WebElement totalBox ;
+
+    @FindBy(css="input[type='submit'][value='Calculate']")
+    public WebElement calculateButton ;
+
+    @FindBy(id="ctl00_MainContent_fmwOrder_txtName")
+    public WebElement customerNameBox ;
+
+    @FindBy(id="ctl00_MainContent_fmwOrder_TextBox2")
+    public WebElement streetBox ;
+
+    @FindBy(id="ctl00_MainContent_fmwOrder_TextBox3")
+    public WebElement cityBox ;
+
+    @FindBy(id="ctl00_MainContent_fmwOrder_TextBox4")
+    public WebElement stateBox ;
+
+    @FindBy(id="ctl00_MainContent_fmwOrder_TextBox5")
+    public WebElement zipBox ;
+
+    @FindBy(id="ctl00_MainContent_fmwOrder_cardList_0")
+    public WebElement visaRadioButton ;
+
+    @FindBy(id="ctl00_MainContent_fmwOrder_TextBox6")
+    public WebElement cardNumber ;
+
+    @FindBy(id="ctl00_MainContent_fmwOrder_TextBox1")
+    public WebElement cardDate ;
+
+    @FindBy(id="ctl00_MainContent_fmwOrder_InsertButton")
+    public WebElement processButton ;
+
+    @FindBy(xpath =" //strong[normalize-space(.)='New order has been successfully added.']")
+    public WebElement successMessage ;
+
+    @FindBy(xpath = "//input[@type='reset']")
+    public WebElement resetBtn;
+
+    public WOrderPage(){
+        PageFactory.initElements(Driver.getDriver(),this);
+    }
+
+    /**
+     * get All Product Options From Product Dropdown List
+     * @return List<String> that hold all the options text
+     */
+    public List<String> getAllProductOptionFromList(){
+
+        Select selectObj = new Select(productDropdown);
+
+//        List<String> actualOptions =
+//                selectObj.getOptions().stream()    // get Stream<WebElement> from List<WebElement>
+//                        .map(eachOption-> eachOption.getText()) // get List<String> from List<WebElement>
+//                        .collect(Collectors.toList()); // eventually collect it as a list
+
+        //getOptions method from select class is used
+        // to return all dropdown options as List of webelement
+        List<WebElement> allProductOptions = selectObj.getOptions();
+        // this is the list to store actual option so we can compare with expected
+        List<String> actualOptions = new ArrayList<>();
+
+        for (WebElement eachOption : allProductOptions) {
+            System.out.println("eachOption.getText() = " + eachOption.getText());
+            actualOptions.add(eachOption.getText()) ;
+        }
+
+        return actualOptions;
+    }
+
+
+    public Map<String, Object > getUnitPriceAndProducts(){
+
+        Select selectObj = new Select(productDropdown);
+        List<WebElement> allProductOptions = selectObj.getOptions();
+        Map<String, Object> actualOptions = new LinkedHashMap<>();
+
+        for (WebElement eachOption : allProductOptions) {
+            eachOption.click();
+            Object result = String.valueOf(priceBox.getAttribute("value"));
+            actualOptions.put(eachOption.getText(), result) ;
+
+        }
+             return actualOptions;
+    }
+
+    public String getOneProduct(String productName){
+        Select selectObj = new Select(productDropdown);
+       selectObj.selectByVisibleText(productName);
+        return productDropdown.getText();
+    }
+
+    /*public Map<String, String> getDiscount(List<Map<String, String>> allProductsInfo){
+
+        for(Map<String, String> eachProduct:allProductsInfo) {
+            quantityBox.sendKeys(eachProduct.get("Quantity"));
+            String discount = eachProduct.get("Discount");
+            String total =
+
+        }
+        return null;
+    }
+    */
+}
