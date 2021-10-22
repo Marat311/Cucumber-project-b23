@@ -9,7 +9,7 @@ Feature: Calculator feature
   Scenario: Add 2 numbers
     Given calculator app is open
     When I add 2 with 2
-    Then I should get result 41 displayed
+    Then I should get result 4 displayed
 @smoke
   Scenario: Add 2 numbers another example
     Given calculator app is open

@@ -1,0 +1,82 @@
+Today is October 19, 2021
+
+Topic: CI/CD with Jenkins
+
+
+
+cybertek.com - production
+
+qa.cybertek.com     |
+                    | test environments
+test.cybertek.com   |
+
+
+ci - continues integration
+cd - continues delivery/deployment
+
+deployment - process of sending new version of the application to some environment.
+
+environment - version of the application. All environments look almost the same, except that only production has a real data.
+
+What environments we usually have?
+
+dev - reserved for developers
+test - reserved for functional testers
+stage - to prepare for release
+pre-prod - mirror of production, has exactly same version of app as prod. Helps to test production issues.
+production - used by end-users
+
+Break until 3:15 PM EST
+
+If my tests are running for too long, and at the end I see that all tests failed and SessionNotCreatedException try to:
+1. restart the server:
+- go to aws ec2 console
+- select server
+- instance state
+- reboot
+
+NOTE: after reboot(or stop) IP address can change. Please make sure that you have correct IPv4 public address.
+
+To reach Jenkins - IP:8081
+
+# Security groups:
+
+There are INBOUND and OUTBOUND rules.
+
+INBOUND - who can connect to the server (default - port 3389 for windows, 22 for linux)
+OUTBOUND - what server can reach (default - everything)
+
+IP:PORT
+
+IP - server address
+
+PORT - is like an apartment number, address of specific program within server.
+
+SessionNotCreatedException - webdriver cannot talk to chrome browser.
+
+
+But we can say google.com, without port? Because if you don't specify port, it will reach port 443 for HTTPS and 80 for HTTP by default.
+
+
+HTTP protocol not recommended, thus most of the websites use HTTPS.
+
+
+Default port for Jenkins is 8080, but we set it to 8081.
+
+Install cucumber plugin
+
+Plugins - manage plugins -> available -> cucumber reports -> install and restart -> reload browser page after a minute or so -> login again.
+
+
+TZ=US/Eastern
+H 5 1 1 *
+H 4 * * 1-5
+
+
+BUILD:
+
+Invoke Top-Level maven targets --> test
+
+POST BUILD:
+
+Cucumber reports
