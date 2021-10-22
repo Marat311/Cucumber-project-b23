@@ -14,6 +14,7 @@
     </properties>
 
     <dependencies>
+
         <!-- https://mvnrepository.com/artifact/io.cucumber/cucumber-java -->
         <dependency>
             <groupId>io.cucumber</groupId>
@@ -27,36 +28,36 @@
             <version>6.11.0</version>
         </dependency>
 
-        <!--        This is the dependency for selenium java binding -->
         <dependency>
             <groupId>org.seleniumhq.selenium</groupId>
             <artifactId>selenium-java</artifactId>
             <version>3.141.59</version>
         </dependency>
 
-        <!--        This is WebDriverManager dependency to help us set up Browser driver automatically-->
-        <!-- https://mvnrepository.com/artifact/io.github.bonigarcia/webdrivermanager -->
-        <dependency>
-            <groupId>io.github.bonigarcia</groupId>
-            <artifactId>webdrivermanager</artifactId>
-            <version>5.0.2</version>
-        </dependency>
-        <dependency>
-            <groupId>junit</groupId>
-            <artifactId>junit</artifactId>
-            <version>4.12</version>
-        </dependency>
         <dependency>
             <groupId>com.github.javafaker</groupId>
             <artifactId>javafaker</artifactId>
             <version>1.0.2</version>
         </dependency>
+
         <dependency>
-            <groupId>org.junit.jupiter</groupId>
-            <artifactId>junit-jupiter</artifactId>
-            <version>RELEASE</version>
-            <scope>test</scope>
+            <groupId>io.github.bonigarcia</groupId>
+            <artifactId>webdrivermanager</artifactId>
+            <version>5.0.2</version>
         </dependency>
+
+        <dependency>
+            <groupId>me.jvt.cucumber</groupId>
+            <artifactId>reporting-plugin</artifactId>
+            <version>5.3.0</version>
+        </dependency>
+        <!--If you want to get rid of SLF4J Failed to load message from the console -->
+        <dependency>
+            <groupId>org.slf4j</groupId>
+            <artifactId>slf4j-simple</artifactId>
+            <version>1.7.32</version>
+        </dependency>
+
     </dependencies>
 
     <build>
@@ -67,22 +68,26 @@
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-surefire-plugin</artifactId>
                 <version>3.0.0-M5</version>
-<!-- this is  where we can tell sure fire plugin to run test in certain way -->
+                <!-- this is where we can tell sure fire plugin to run test in certain way   -->
                 <configuration>
                     <testFailureIgnore>true</testFailureIgnore>
                     <runOrder>Alphabetical</runOrder>
-                    <!--                    <parallel>methods</parallel>-->
+                    <parallel>methods</parallel>
                     <!--                    <useUnlimitedThreads>true</useUnlimitedThreads>-->
+                    <threadCount>4</threadCount>
+                    <perCoreThreadCount>false</perCoreThreadCount>
                     <includes>
-                        <include>**/*TestRunner.java</include>
-<!--                         <include>**/*FailedTestRunner.java</include>-->
+                          <include>**/*TestRunner.java</include>
+                        <!--                         <include>**/*FailedTestRunner.java</include>-->
                     </includes>
                 </configuration>
 
             </plugin>
 
         </plugins>
-
     </build>
+
+
+
 
 </project>
